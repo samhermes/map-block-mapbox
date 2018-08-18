@@ -23,10 +23,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 function mapbox_block_gutenberg_assets() {
 	// Styles.
 	wp_enqueue_style(
-		'mapbox_block_gutenberg-style-css', // Handle.
+		'mapbox_block_gutenberg-style', // Handle.
 		plugins_url( 'dist/blocks.style.build.css', dirname( __FILE__ ) ), // Block style CSS.
 		array( 'wp-blocks' ) // Dependency to include the CSS after it.
 		// filemtime( plugin_dir_path( __DIR__ ) . 'dist/blocks.style.build.css' ) // Version: filemtime — Gets file modification time.
+	);
+
+	// Mapbox script.
+	wp_enqueue_script(
+		'mapbox_block_gutenberg-mapbox-gl-js',
+		'https://api.tiles.mapbox.com/mapbox-gl-js/v0.48.0/mapbox-gl.js',
+		array(),  // Dependencies
+		'0.48.0',
+		true // Enqueue the script in the footer.
 	);
 } // End function mapbox_block_gutenberg_assets().
 
@@ -43,18 +52,27 @@ add_action( 'enqueue_block_assets', 'mapbox_block_gutenberg_assets' );
  * @since 1.0.0
  */
 function mapbox_block_gutenberg_editor_assets() {
+	// Mapbox script.
+	wp_enqueue_script(
+		'mapbox_block_gutenberg-mapbox-gl-js',
+		'https://api.tiles.mapbox.com/mapbox-gl-js/v0.48.0/mapbox-gl.js',
+		array(),  // Dependencies
+		'0.48.0',
+		true // Enqueue the script in the footer.
+	);
+
 	// Scripts.
 	wp_enqueue_script(
-		'mapbox_block_gutenberg-block-js', // Handle.
+		'mapbox_block_gutenberg-block', // Handle.
 		plugins_url( '/dist/blocks.build.js', dirname( __FILE__ ) ), // Block.build.js: We register the block here. Built with Webpack.
-		array( 'wp-blocks', 'wp-i18n', 'wp-element' ), // Dependencies, defined above.
-		// filemtime( plugin_dir_path( __DIR__ ) . 'dist/blocks.build.js' ), // Version: filemtime — Gets file modification time.
+		array( 'wp-blocks', 'wp-i18n', 'wp-element', 'mapbox_block_gutenberg-mapbox-gl-js' ), // Dependencies, defined above.
+		// filemtime( plugin_dir_path( __DIR__ ) . 'dist/blocks.editor.build.css' ) // Version: filemtime — Gets file modification time.
 		true // Enqueue the script in the footer.
 	);
 
 	// Styles.
 	wp_enqueue_style(
-		'mapbox_block_gutenberg-block-editor-css', // Handle.
+		'mapbox_block_gutenberg-block-editor', // Handle.
 		plugins_url( 'dist/blocks.editor.build.css', dirname( __FILE__ ) ), // Block editor CSS.
 		array( 'wp-edit-blocks' ) // Dependency to include the CSS after it.
 		// filemtime( plugin_dir_path( __DIR__ ) . 'dist/blocks.editor.build.css' ) // Version: filemtime — Gets file modification time.
