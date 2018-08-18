@@ -5,6 +5,9 @@
  * which makes it higher in priority.
  */
 
-.wp-block-samhermes-mapbox-map  {
-
+.wp-block-samhermes-mapbox-map {
+  #mapbox-map {
+    width: 100%;
+    height: 400px;
+  }
 }

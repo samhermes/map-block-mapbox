@@ -9,3 +9,6 @@
  *
  * CSS for both Frontend+Backend.
  */
+.wp-block-samhermes-mapbox-map #mapbox-map {
+  width: 100%;
+  height: 400px; }

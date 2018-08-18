@@ -5,9 +5,10 @@
  * Simple block, renders and saves the same content without any interactivity.
  */
 
-//  Import CSS.
+//  Import.
 import './style.scss';
 import './editor.scss';
+import Map from './map'
 
 const { __ } = wp.i18n; // Import __() from wp.i18n
 const { registerBlockType } = wp.blocks; // Import registerBlockType() from wp.blocks
@@ -50,6 +51,7 @@ registerBlockType( 'samhermes/mapbox-map', {
 				<p>
 					<code>mapbox-block-gutenberg</code> is a new Gutenberg block
 				</p>
+				<Map />
 			</div>
 		);
 	},
@@ -69,6 +71,7 @@ registerBlockType( 'samhermes/mapbox-map', {
 				<p>
 					<code>mapbox-block-gutenberg</code> is a new Gutenberg block.
 				</p>
+				<Map />
 			</div>
 		);
 	},

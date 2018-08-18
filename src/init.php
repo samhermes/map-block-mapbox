@@ -29,6 +29,14 @@ function mapbox_block_gutenberg_assets() {
 		// filemtime( plugin_dir_path( __DIR__ ) . 'dist/blocks.style.build.css' ) // Version: filemtime — Gets file modification time.
 	);
 
+	wp_enqueue_style(
+		'mapbox_block_gutenberg-mapbox-style', // Handle.
+		'https://api.tiles.mapbox.com/mapbox-gl-js/v0.48.0/mapbox-gl.css',
+		array( 'wp-blocks' ) // Dependency to include the CSS after it.
+		// filemtime( plugin_dir_path( __DIR__ ) . 'dist/blocks.style.build.css' ) // Version: filemtime — Gets file modification time.
+	);
+	
+
 	// Mapbox script.
 	wp_enqueue_script(
 		'mapbox_block_gutenberg-mapbox-gl-js',
@@ -76,6 +84,13 @@ function mapbox_block_gutenberg_editor_assets() {
 		plugins_url( 'dist/blocks.editor.build.css', dirname( __FILE__ ) ), // Block editor CSS.
 		array( 'wp-edit-blocks' ) // Dependency to include the CSS after it.
 		// filemtime( plugin_dir_path( __DIR__ ) . 'dist/blocks.editor.build.css' ) // Version: filemtime — Gets file modification time.
+	);
+
+	wp_enqueue_style(
+		'mapbox_block_gutenberg-mapbox-style', // Handle.
+		'https://api.tiles.mapbox.com/mapbox-gl-js/v0.48.0/mapbox-gl.css',
+		array( 'wp-edit-blocks' ) // Dependency to include the CSS after it.
+		// filemtime( plugin_dir_path( __DIR__ ) . 'dist/blocks.style.build.css' ) // Version: filemtime — Gets file modification time.
 	);
 } // End function mapbox_block_gutenberg_editor_assets().
 

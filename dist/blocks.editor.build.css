@@ -10,3 +10,6 @@
  * CSS for just Backend enqueued after style.scss
  * which makes it higher in priority.
  */
+.wp-block-samhermes-mapbox-map #mapbox-map {
+  width: 100%;
+  height: 400px; }
