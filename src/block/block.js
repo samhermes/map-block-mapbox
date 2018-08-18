@@ -25,15 +25,14 @@ const { registerBlockType } = wp.blocks; // Import registerBlockType() from wp.b
  * @return {?WPBlock}          The block, if it has been successfully
  *                             registered; otherwise `undefined`.
  */
-registerBlockType( 'cgb/block-mapbox-block-gutenberg', {
+registerBlockType( 'samhermes/mapbox-map', {
 	// Block name. Block names must be string that contains a namespace prefix. Example: my-plugin/my-custom-block.
-	title: __( 'mapbox-block-gutenberg - CGB Block' ), // Block title.
-	icon: 'shield', // Block icon from Dashicons → https://developer.wordpress.org/resource/dashicons/.
-	category: 'common', // Block category — Group blocks together based on common traits E.g. common, formatting, layout widgets, embed.
+	title: __( 'Mapbox Map' ), // Block title.
+	icon: 'location-alt', // Block icon from Dashicons → https://developer.wordpress.org/resource/dashicons/.
+	category: 'embed',
 	keywords: [
-		__( 'mapbox-block-gutenberg — CGB Block' ),
-		__( 'CGB Example' ),
-		__( 'create-guten-block' ),
+		__( 'mapbox-block-gutenberg' ),
+		__( 'Mapbox Map Block' ),
 	],
 
 	/**
@@ -45,20 +44,11 @@ registerBlockType( 'cgb/block-mapbox-block-gutenberg', {
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
 	edit: function( props ) {
-		// Creates a <p class='wp-block-cgb-block-mapbox-block-gutenberg'></p>.
 		return (
 			<div className={ props.className }>
 				<p>— Hello from the backend.</p>
 				<p>
-					CGB BLOCK: <code>mapbox-block-gutenberg</code> is a new Gutenberg block
-				</p>
-				<p>
-					It was created via{ ' ' }
-					<code>
-						<a href="https://github.com/ahmadawais/create-guten-block">
-							create-guten-block
-						</a>
-					</code>.
+					<code>mapbox-block-gutenberg</code> is a new Gutenberg block
 				</p>
 			</div>
 		);
@@ -77,15 +67,7 @@ registerBlockType( 'cgb/block-mapbox-block-gutenberg', {
 			<div>
 				<p>— Hello from the frontend.</p>
 				<p>
-					CGB BLOCK: <code>mapbox-block-gutenberg</code> is a new Gutenberg block.
-				</p>
-				<p>
-					It was created via{ ' ' }
-					<code>
-						<a href="https://github.com/ahmadawais/create-guten-block">
-							create-guten-block
-						</a>
-					</code>.
+					<code>mapbox-block-gutenberg</code> is a new Gutenberg block.
 				</p>
 			</div>
 		);
