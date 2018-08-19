@@ -35,6 +35,15 @@ registerBlockType( 'samhermes/mapbox-map', {
 		__( 'mapbox-block-gutenberg' ),
 		__( 'Mapbox Map Block' ),
 	],
+	attributes: {
+		mapPoint: {
+			type: 'string',
+			source: 'attribute',
+			attribute: 'data-map-point',
+			selector: '#mapbox-map',
+			default: '0,0',
+		}
+	},
 
 	/**
 	 * The edit function describes the structure of your block in the context of the editor.
@@ -44,10 +53,18 @@ registerBlockType( 'samhermes/mapbox-map', {
 	 *
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
-	edit: function( props ) {
+	edit: function( props, attributes, setAttributes ) {
+		const { mapPoint } = attributes;
+
+		const onChangeMap = ( settings ) => {
+			setAttributes( {
+				mapPoint: settings.center.join(','),
+			});
+		}
+		
 		return (
 			<div className={ props.className }>
-				<Map />
+				<Map mapPoint={ mapPoint } onChange={ onChangeMap } />
 			</div>
 		);
 	},
@@ -61,9 +78,13 @@ registerBlockType( 'samhermes/mapbox-map', {
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
 	save: function( props ) {
+		const { mapPoint } = props.attributes;
+
 		return (
 			<div>
-				<Map />
+				<div id="mapbox-map"
+					data-map-point={ mapPoint }
+				></div>
 			</div>
 		);
 	},
