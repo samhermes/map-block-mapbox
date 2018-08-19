@@ -47,10 +47,6 @@ registerBlockType( 'samhermes/mapbox-map', {
 	edit: function( props ) {
 		return (
 			<div className={ props.className }>
-				<p>— Hello from the backend.</p>
-				<p>
-					<code>mapbox-block-gutenberg</code> is a new Gutenberg block
-				</p>
 				<Map />
 			</div>
 		);
@@ -67,10 +63,6 @@ registerBlockType( 'samhermes/mapbox-map', {
 	save: function( props ) {
 		return (
 			<div>
-				<p>— Hello from the frontend.</p>
-				<p>
-					<code>mapbox-block-gutenberg</code> is a new Gutenberg block.
-				</p>
 				<Map />
 			</div>
 		);
