@@ -45,6 +45,7 @@ function mapbox_block_gutenberg_assets() {
 		'0.48.0',
 		true // Enqueue the script in the footer.
 	);
+
 } // End function mapbox_block_gutenberg_assets().
 
 // Hook: Frontend assets.
@@ -60,12 +61,20 @@ add_action( 'enqueue_block_assets', 'mapbox_block_gutenberg_assets' );
  * @since 1.0.0
  */
 function mapbox_block_gutenberg_editor_assets() {
-	// Mapbox script.
+	// Mapbox scripts.
 	wp_enqueue_script(
 		'mapbox_block_gutenberg-mapbox-gl-js',
 		'https://api.tiles.mapbox.com/mapbox-gl-js/v0.48.0/mapbox-gl.js',
 		array(),  // Dependencies
 		'0.48.0',
+		true // Enqueue the script in the footer.
+	);
+
+	wp_enqueue_script(
+		'mapbox_block_gutenberg-mapbox-geocoder',
+		'https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.3.0/mapbox-gl-geocoder.min.js',
+		array('mapbox_block_gutenberg-mapbox-gl-js'),  // Dependencies
+		'2.3.0',
 		true // Enqueue the script in the footer.
 	);
 
@@ -92,6 +101,14 @@ function mapbox_block_gutenberg_editor_assets() {
 		array( 'wp-edit-blocks' ) // Dependency to include the CSS after it.
 		// filemtime( plugin_dir_path( __DIR__ ) . 'dist/blocks.style.build.css' ) // Version: filemtime — Gets file modification time.
 	);
+
+	wp_enqueue_style(
+		'mapbox_block_gutenberg-mapbox-geocoder', // Handle.
+		'https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.3.0/mapbox-gl-geocoder.css',
+		array( 'wp-edit-blocks', 'mapbox_block_gutenberg-mapbox-style' ) // Dependency to include the CSS after it.
+		// filemtime( plugin_dir_path( __DIR__ ) . 'dist/blocks.style.build.css' ) // Version: filemtime — Gets file modification time.
+	);
+
 } // End function mapbox_block_gutenberg_editor_assets().
 
 // Hook: Editor assets.
