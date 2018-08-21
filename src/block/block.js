@@ -12,6 +12,9 @@ import Map from './map'
 
 const { __ } = wp.i18n; // Import __() from wp.i18n
 const { registerBlockType } = wp.blocks; // Import registerBlockType() from wp.blocks
+const { InspectorControls } = wp.editor;
+const { RangeControl } = wp.components;
+const { Fragment } = wp.element;
 
 /**
  * Register: aa Gutenberg Block.
@@ -36,12 +39,26 @@ registerBlockType( 'samhermes/mapbox-map', {
 		__( 'Mapbox Map Block' ),
 	],
 	attributes: {
-		mapPoint: {
-			type: 'string',
+		lat: {
+			type: 'number',
 			source: 'attribute',
-			attribute: 'data-map-point',
-			selector: '#mapbox-map',
-			default: '0,0',
+            attribute: 'data-lat',
+            selector: '#mapbox-map',
+			default: 0,
+		},
+		lng: {
+			type: 'number',
+			source: 'attribute',
+            attribute: 'data-lng',
+            selector: '#mapbox-map',
+			default: 0,
+		},
+		zoom: {
+			type: 'number',
+			source: 'attribute',
+			attribute: 'data-zoom',
+            selector: '#mapbox-map',
+			default: 0
 		}
 	},
 
@@ -53,19 +70,32 @@ registerBlockType( 'samhermes/mapbox-map', {
 	 *
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
-	edit: function( props, attributes, setAttributes ) {
-		const { mapPoint } = attributes;
-
-		const onChangeMap = ( settings ) => {
-			setAttributes( {
-				mapPoint: settings.center.join(','),
-			});
-		}
+	edit: function( { attributes, setAttributes, className } ) {
+		const { lat, lng, zoom } = attributes;
 		
 		return (
-			<div className={ props.className }>
-				<Map mapPoint={ mapPoint } onChange={ onChangeMap } />
-			</div>
+			<Fragment>
+				<InspectorControls>
+					<RangeControl
+						label={ __( 'Zoom Level' ) }
+						value={ zoom }
+						onChange={ ( value ) => setAttributes( { zoom: value } ) }
+						min={ 0 }
+						max={ 22 }
+						/>
+				</InspectorControls>
+				<div className={ className }>
+					<Map
+						lat={ lat }
+						lng={ lng }
+						zoom={ zoom }
+						onChange={ ( value ) => setAttributes( {
+							lat: value.lat,
+							lng: value.lng
+						} ) }
+						/>
+				</div>
+			</Fragment>
 		);
 	},
 
@@ -77,13 +107,15 @@ registerBlockType( 'samhermes/mapbox-map', {
 	 *
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
-	save: function( props ) {
-		const { mapPoint } = props.attributes;
+	save: function( { attributes } ) {
+		const { lat, lng, zoom } = attributes;
 
 		return (
 			<div>
 				<div id="mapbox-map"
-					data-map-point={ mapPoint }
+					data-lat={ lat }
+					data-lng={ lng }
+					data-zoom={ zoom }
 				></div>
 			</div>
 		);

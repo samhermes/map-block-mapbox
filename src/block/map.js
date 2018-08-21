@@ -1,4 +1,3 @@
-import React from 'react';
 
 export default class Map extends React.Component {
     render() {
@@ -8,19 +7,25 @@ export default class Map extends React.Component {
     componentDidMount() {
         mapboxgl.accessToken = 'pk.eyJ1Ijoic2FtaGVybWVzIiwiYSI6ImNpbGxjeGhmYzVvMm52bm1jdmx0NmtvbXoifQ.uf5gBnnbU05bnaw7atDu9A';
 
+        const mapPoint = [
+            this.props.lat,
+            this.props.lng
+        ];
+
         this.map = new mapboxgl.Map({
             container: 'mapbox-map',
             style: 'mapbox://styles/mapbox/streets-v9',
-            center: this.props.center,
+            center: mapPoint,
+            zoom: this.props.zoom
         });
 
         this.addControls();
     }
 
-    onChange() {
-		this.props.onChange( {
-			center: this.map.getCenter().toArray(),
-		} );
+    componentDidUpdate( prevProps ) {
+		if ( this.props.zoom !== prevProps.zoom ) {
+			this.map.flyTo({ zoom: this.props.zoom });
+		}
 	}
 
     addControls() {
@@ -44,19 +49,21 @@ export default class Map extends React.Component {
             this.map.addLayer({
                 "id": "point",
                 "source": "single-point",
-                "type": "symbol",
-                "layout": {
-                    "icon-image": "marker-15",
+                "type": "circle",
+                "paint": {
+                    "circle-radius": 10,
+                    "circle-color": "#007cbf"
                 }
             });
 
             this.controls.geocoder.on('result', (ev) => {
                 this.map.getSource('single-point').setData(ev.result.geometry);
+
+                this.props.onChange({
+                    lat: ev.result.geometry.coordinates[0],
+                    lng: ev.result.geometry.coordinates[1]
+                });
             });
         });
 	}
 }
-
-Map.defaultProps = {
-	center: [ 0, 0 ]
-};
