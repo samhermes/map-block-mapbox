@@ -58,7 +58,7 @@ registerBlockType( 'samhermes/mapbox-map', {
 			source: 'attribute',
 			attribute: 'data-zoom',
             selector: '#mapbox-map',
-			default: 0
+			default: 1
 		}
 	},
 
@@ -80,7 +80,7 @@ registerBlockType( 'samhermes/mapbox-map', {
 						label={ __( 'Zoom Level' ) }
 						value={ zoom }
 						onChange={ ( value ) => setAttributes( { zoom: value } ) }
-						min={ 0 }
+						min={ 1 }
 						max={ 22 }
 						/>
 				</InspectorControls>

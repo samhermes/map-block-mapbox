@@ -8,8 +8,8 @@ export default class Map extends React.Component {
         mapboxgl.accessToken = 'pk.eyJ1Ijoic2FtaGVybWVzIiwiYSI6ImNpbGxjeGhmYzVvMm52bm1jdmx0NmtvbXoifQ.uf5gBnnbU05bnaw7atDu9A';
 
         const mapPoint = [
-            this.props.lat,
-            this.props.lng
+            this.props.lng,
+            this.props.lat
         ];
 
         this.map = new mapboxgl.Map({
@@ -60,10 +60,10 @@ export default class Map extends React.Component {
                 this.map.getSource('single-point').setData(ev.result.geometry);
 
                 this.props.onChange({
-                    lat: ev.result.geometry.coordinates[0],
-                    lng: ev.result.geometry.coordinates[1]
+                    lng: ev.result.geometry.coordinates[0],
+                    lat: ev.result.geometry.coordinates[1]
                 });
             });
         });
-	}
+    }
 }
