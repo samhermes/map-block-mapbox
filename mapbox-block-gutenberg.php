@@ -1,8 +1,8 @@
 <?php
 /**
- * Plugin Name: Mapbox Block for Gutenberg
+ * Plugin Name: Map Block for Mapbox
  * Plugin URI: https://github.com/samhermes/mapbox-block-gutenberg/
- * Description: Adds a Mapbox maps block to the Gutenberg editor.
+ * Description: Adds a map block to the Gutenberg editor using Mapbox.
  * Author: Sam Hermes
  * Author URI: https://samhermes.com
  * Version: 1.0.0
