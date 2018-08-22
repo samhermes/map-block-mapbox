@@ -7,7 +7,7 @@ export default class Map extends React.Component {
     componentDidMount() {
         mapboxgl.accessToken = 'pk.eyJ1Ijoic2FtaGVybWVzIiwiYSI6ImNpbGxjeGhmYzVvMm52bm1jdmx0NmtvbXoifQ.uf5gBnnbU05bnaw7atDu9A';
 
-        const mapPoint = [
+        let mapPoint = [
             this.props.lng,
             this.props.lat
         ];
@@ -29,13 +29,13 @@ export default class Map extends React.Component {
 	}
 
     addControls() {
-		this.controls = {};
+        this.controls = {};
 
-		this.controls.geocoder = new MapboxGeocoder({ accessToken: mapboxgl.accessToken });
+		this.controls.geocoder = new MapboxGeocoder({
+            accessToken: mapboxgl.accessToken,
+            flyTo: false
+        });
 		this.map.addControl( this.controls.geocoder, 'top-right' );
-
-		this.controls.nav = new mapboxgl.NavigationControl();
-		this.map.addControl( this.controls.nav, 'top-right' );
         
         this.map.on('load', () => {
             this.map.addSource('single-point', {
@@ -58,6 +58,10 @@ export default class Map extends React.Component {
 
             this.controls.geocoder.on('result', (ev) => {
                 this.map.getSource('single-point').setData(ev.result.geometry);
+
+                this.map.jumpTo({
+                    center: ev.result.center
+                });
 
                 this.props.onChange({
                     lng: ev.result.geometry.coordinates[0],
