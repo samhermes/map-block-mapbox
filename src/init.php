@@ -14,6 +14,36 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
+ * Register setting field for API key from Mapbox.
+ *
+ * @since 1.0.0
+ */
+function mapbox_block_api_key_setting() {
+	$args = array(
+		'type' => 'string', 
+		'sanitize_callback' => 'sanitize_text_field',
+		'default' => '',
+	);
+	register_setting( 'general', 'mapbox_block_setting', $args );
+
+	add_settings_field(
+		'coordinates_api_key',
+		'Mapbox API key',
+		'mapbox_block_settings_field_cb',
+		'general',
+		'default',
+		array( 'label_for' => 'mapbox_block_setting' )
+	);
+} 
+add_action( 'admin_init', 'mapbox_block_api_key_setting' );
+
+function mapbox_block_settings_field_cb() {
+    $setting = get_option( 'mapbox_block_setting' ); ?>
+    <input type="text" name="mapbox_block_setting" value="<?php echo isset( $setting ) ? esc_attr( $setting ) : ''; ?>">
+    <?php
+}
+
+/**
  * Enqueue Gutenberg block assets for both frontend + backend.
  *
  * `wp-blocks`: includes block type registration and related functions.
@@ -36,7 +66,6 @@ function mapbox_block_gutenberg_assets() {
 		// filemtime( plugin_dir_path( __DIR__ ) . 'dist/blocks.style.build.css' ) // Version: filemtime — Gets file modification time.
 	);
 	
-
 	// Mapbox script.
 	wp_enqueue_script(
 		'mapbox_block_gutenberg-mapbox-gl-js',
@@ -67,7 +96,7 @@ function mapbox_block_gutenberg_frontend_assets() {
 	);
 
 	wp_localize_script( 'mapbox_block_gutenberg-frontend', 'mapboxBlock', [
-		'apiKey' => true ? 'pk.eyJ1Ijoic2FtaGVybWVzIiwiYSI6ImNpbGxjeGhmYzVvMm52bm1jdmx0NmtvbXoifQ.uf5gBnnbU05bnaw7atDu9A' : null
+		'apiKey' => get_option( 'mapbox_block_setting' ) ? get_option( 'mapbox_block_setting' ) : null
 	] );
 
 } // End function mapbox_block_gutenberg_frontend_assets().
@@ -104,7 +133,7 @@ function mapbox_block_gutenberg_editor_assets() {
 	);
 
 	wp_localize_script( 'mapbox_block_gutenberg-block', 'mapboxBlock', [
-		'apiKey' => true ? 'pk.eyJ1Ijoic2FtaGVybWVzIiwiYSI6ImNpbGxjeGhmYzVvMm52bm1jdmx0NmtvbXoifQ.uf5gBnnbU05bnaw7atDu9A' : null
+		'apiKey' => get_option( 'mapbox_block_setting' ) ? get_option( 'mapbox_block_setting' ) : null
 	] );
 
 	// Styles.
