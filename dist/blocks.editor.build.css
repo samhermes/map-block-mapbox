@@ -10,5 +10,5 @@
  * CSS for just Backend enqueued after style.scss
  * which makes it higher in priority.
  */
-.wp-block-samhermes-mapbox-map {
+.wp-block-coordinates-mapbox-map {
   margin-bottom: 0; }
