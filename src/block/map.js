@@ -5,7 +5,7 @@ export default class Map extends React.Component {
     }
 
     componentDidMount() {
-        mapboxgl.accessToken = 'pk.eyJ1Ijoic2FtaGVybWVzIiwiYSI6ImNpbGxjeGhmYzVvMm52bm1jdmx0NmtvbXoifQ.uf5gBnnbU05bnaw7atDu9A';
+        mapboxgl.accessToken = mapboxBlock.apiKey;
 
         let mapPoint = [
             this.props.lng,
@@ -19,7 +19,11 @@ export default class Map extends React.Component {
             zoom: this.props.zoom
         });
 
-        this.addControls();
+        let marker = new mapboxgl.Marker()
+            .setLngLat( mapPoint )
+            .addTo( this.map );
+
+        this.addControls( marker );
     }
 
     componentDidUpdate( prevProps ) {
@@ -28,7 +32,7 @@ export default class Map extends React.Component {
 		}
 	}
 
-    addControls() {
+    addControls( marker ) {
         this.controls = {};
 
 		this.controls.geocoder = new MapboxGeocoder({
@@ -38,30 +42,12 @@ export default class Map extends React.Component {
 		this.map.addControl( this.controls.geocoder, 'top-right' );
         
         this.map.on('load', () => {
-            this.map.addSource('single-point', {
-                "type": "geojson",
-                "data": {
-                    "type": "FeatureCollection",
-                    "features": []
-                }
-            });
-
-            this.map.addLayer({
-                "id": "point",
-                "source": "single-point",
-                "type": "circle",
-                "paint": {
-                    "circle-radius": 10,
-                    "circle-color": "#007cbf"
-                }
-            });
-
             this.controls.geocoder.on('result', (ev) => {
-                this.map.getSource('single-point').setData(ev.result.geometry);
-
                 this.map.jumpTo({
                     center: ev.result.center
                 });
+
+                marker.setLngLat( ev.result.center );
 
                 this.props.onChange({
                     lng: ev.result.geometry.coordinates[0],

@@ -38,6 +38,9 @@ registerBlockType( 'samhermes/mapbox-map', {
 		__( 'mapbox-block-gutenberg' ),
 		__( 'Mapbox Map Block' ),
 	],
+	supports: {
+		multiple: false,
+	},
 	attributes: {
 		lat: {
 			type: 'number',
