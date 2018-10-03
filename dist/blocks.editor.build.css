@@ -12,3 +12,12 @@
  */
 .wp-block-coordinates-mapbox-map {
   margin-bottom: 0; }
+
+.mapbox-block-token {
+  background: rgba(140, 140, 151, 0.1);
+  min-height: 400px;
+  padding: 3rem; }
+  .mapbox-block-token h2 {
+    margin-top: 0; }
+  .mapbox-block-token p {
+    margin: 0 0 1.25rem; }

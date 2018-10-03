@@ -5,7 +5,7 @@ export default class Map extends React.Component {
     }
 
     componentDidMount() {
-        mapboxgl.accessToken = mapboxBlock.apiKey;
+        mapboxgl.accessToken = mapboxBlock.accessToken;
 
         let mapPoint = [
             this.props.lng,

@@ -1,4 +1,4 @@
-mapboxgl.accessToken = mapboxBlock.apiKey;
+mapboxgl.accessToken = mapboxBlock.accessToken;
 
 var mapboxMap = document.getElementById('mapbox-map'),
     mapLng = mapboxMap.getAttribute('data-lng'),

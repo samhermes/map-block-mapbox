@@ -75,31 +75,43 @@ registerBlockType( 'coordinates/mapbox-map', {
 	 */
 	edit: function( { attributes, setAttributes, className } ) {
 		const { lat, lng, zoom } = attributes;
-		
-		return (
-			<Fragment>
-				<InspectorControls>
-					<RangeControl
-						label={ __( 'Zoom Level' ) }
-						value={ zoom }
-						onChange={ ( value ) => setAttributes( { zoom: value } ) }
-						min={ 1 }
-						max={ 22 }
-						/>
-				</InspectorControls>
-				<div className={ className }>
-					<Map
-						lat={ lat }
-						lng={ lng }
-						zoom={ zoom }
-						onChange={ ( value ) => setAttributes( {
-							lat: value.lat,
-							lng: value.lng
-						} ) }
-						/>
+
+		if ( ! mapboxBlock.accessToken ) {
+            return (
+                <div className="mapbox-block-token">
+					<h2>Block Setup</h2>
+					<p>To use this block, you need to connect it to your Mapbox account. From then on out, you'll be good to go!</p>
+					<a href={ mapboxBlock.optionsPage } className="mapbox-block-token-cta">Connect to Mapbox</a>
 				</div>
-			</Fragment>
-		);
+            )
+        }
+		
+		if ( mapboxBlock.accessToken ) {
+			return (
+				<Fragment>
+					<InspectorControls>
+						<RangeControl
+							label={ __( 'Zoom Level' ) }
+							value={ zoom }
+							onChange={ ( value ) => setAttributes( { zoom: value } ) }
+							min={ 1 }
+							max={ 22 }
+							/>
+					</InspectorControls>
+					<div className={ className }>
+						<Map
+							lat={ lat }
+							lng={ lng }
+							zoom={ zoom }
+							onChange={ ( value ) => setAttributes( {
+								lat: value.lat,
+								lng: value.lng
+							} ) }
+							/>
+					</div>
+				</Fragment>
+			);
+		}
 	},
 
 	/**
