@@ -13,7 +13,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-		'mapbox_block_settings_field_cb',
 /**
  * Enqueue Gutenberg block assets for both frontend + backend.
  *
