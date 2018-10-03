@@ -23,14 +23,8 @@ Installing "Map Block for Mapbox" can be done either by searching for "Map Block
 1. Upload the ZIP file through the 'Plugins > Add New > Upload' screen in your WordPress dashboard
 1. Activate the plugin through the 'Plugins' menu in WordPress
 
-== Screenshots ==
-
-1. Description of first screenshot named screenshot-1
-2. Description of second screenshot named screenshot-2
-3. Description of third screenshot named screenshot-3
-
 == Changelog ==
 
 = 1.0 =
-* 2018-08-26
+* 2018-10-03
 * Initial release
