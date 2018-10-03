@@ -180,9 +180,12 @@ function mapbox_block_options_page_cb() {
 ?>
 	<h2>Map Block for Mapbox Settings</h2>
 
+	<p>In order to use the map block, you'll need to connect to your Mapbox account.</p>
+	<p>Sign in to your Mapbox account at <a href="https://www.mapbox.com/account/">mapbox.com/account</a>. From there, you'll be able to create a new token, or use your default public token.</p>
+	<p>Enter the token below, and it will be used for all map blocks on your site.</p>
+
 	<form method="post" action="options.php">
 		<?php
-			echo 'Enter your Mapbox Access Token. This will be used for all map blocks on your site.';
 			settings_fields( 'token' );
 			do_settings_sections( 'mapbox-block-settings' );      
 			submit_button(); 
