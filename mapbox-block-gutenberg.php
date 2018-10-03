@@ -32,3 +32,13 @@ function mapbox_block_add_settings_link( $links ) {
 	return $links;
 }
 add_filter( 'plugin_action_links_' . plugin_basename(__FILE__), 'mapbox_block_add_settings_link' );
+
+/**
+ * Redirect user to settings page after plugin activation.
+ */
+function mapbox_block_activation_redirect( $plugin ) {
+    if( $plugin == plugin_basename( __FILE__ ) ) {
+        exit( wp_redirect( admin_url( 'options-general.php?page=mapbox-block-settings' ) ) );
+    }
+}
+add_action( 'activated_plugin', 'mapbox_block_activation_redirect' );
