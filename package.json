@@ -1,5 +1,5 @@
 {
-  "name": "mapbox-block-gutenberg",
+  "name": "map-block-mapbox",
   "version": "1.0.0",
   "private": true,
   "scripts": {

@@ -1,5 +1,5 @@
 /**
- * BLOCK: mapbox-block-gutenberg
+ * BLOCK: map-block-mapbox
  *
  * Registering a basic block with Gutenberg.
  * Simple block, renders and saves the same content without any interactivity.
@@ -35,7 +35,7 @@ registerBlockType( 'coordinates/mapbox-map', {
 	icon: 'location-alt', // Block icon from Dashicons → https://developer.wordpress.org/resource/dashicons/.
 	category: 'embed',
 	keywords: [
-		__( 'mapbox-block-gutenberg' ),
+		__( 'map-block-mapbox' ),
 		__( 'Mapbox Map Block' ),
 	],
 	supports: {
