@@ -25,17 +25,17 @@ function mapbox_block_assets() {
 	wp_enqueue_style(
 		'mapbox_block-style', // Handle.
 		plugins_url( 'dist/blocks.style.build.css', dirname( __FILE__ ) ), // Block style CSS.
-		array( 'wp-blocks' ) // Dependency to include the CSS after it.
+		array( 'wp-editor' ) // Dependency to include the CSS after it.
 		// filemtime( plugin_dir_path( __DIR__ ) . 'dist/blocks.style.build.css' ) // Version: filemtime — Gets file modification time.
 	);
 
 	wp_enqueue_style(
 		'mapbox_block-mapbox-style', // Handle.
 		'https://api.tiles.mapbox.com/mapbox-gl-js/v0.48.0/mapbox-gl.css',
-		array( 'wp-blocks' ) // Dependency to include the CSS after it.
+		array( 'wp-editor', 'mapbox_block-style' ) // Dependency to include the CSS after it.
 		// filemtime( plugin_dir_path( __DIR__ ) . 'dist/blocks.style.build.css' ) // Version: filemtime — Gets file modification time.
 	);
-	
+
 	// Mapbox script.
 	wp_enqueue_script(
 		'mapbox_block-mapbox-gl-js',
@@ -84,6 +84,21 @@ add_action( 'wp_enqueue_scripts', 'mapbox_block_frontend_assets' );
  * @since 1.0.0
  */
 function mapbox_block_editor_assets() {
+	// Styles.
+	wp_enqueue_style(
+		'mapbox_block-block-editor', // Handle.
+		plugins_url( 'dist/blocks.editor.build.css', dirname( __FILE__ ) ), // Block editor CSS.
+		array( 'wp-edit-blocks' ) // Dependency to include the CSS after it.
+		// filemtime( plugin_dir_path( __DIR__ ) . 'dist/blocks.editor.build.css' ) // Version: filemtime — Gets file modification time.
+	);
+
+	wp_enqueue_style(
+		'mapbox_block-mapbox-geocoder-style', // Handle.
+		'https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.3.0/mapbox-gl-geocoder.css',
+		array( 'wp-edit-blocks', 'mapbox_block-mapbox-style' ) // Dependency to include the CSS after it.
+		// filemtime( plugin_dir_path( __DIR__ ) . 'dist/blocks.style.build.css' ) // Version: filemtime — Gets file modification time.
+	);
+
 	// Mapbox geocoder script.
 	wp_enqueue_script(
 		'mapbox_block-mapbox-geocoder',
@@ -97,8 +112,8 @@ function mapbox_block_editor_assets() {
 	wp_enqueue_script(
 		'mapbox_block-block', // Handle.
 		plugins_url( '/dist/blocks.build.js', dirname( __FILE__ ) ), // Block.build.js: We register the block here. Built with Webpack.
-		array( 'wp-blocks', 'wp-i18n', 'wp-element', 'mapbox_block-mapbox-gl-js' ), // Dependencies, defined above.
-		// filemtime( plugin_dir_path( __DIR__ ) . 'dist/blocks.editor.build.css' ) // Version: filemtime — Gets file modification time.
+		array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-editor', 'mapbox_block-mapbox-gl-js', 'mapbox_block-mapbox-geocoder' ), // Dependencies, defined above.
+		'1.0.0',
 		true // Enqueue the script in the footer.
 	);
 
@@ -106,21 +121,6 @@ function mapbox_block_editor_assets() {
 		'accessToken' => get_option( 'mapbox_block_token' ) ? get_option( 'mapbox_block_token' ) : null,
 		'optionsPage' => admin_url( 'options-general.php?page=mapbox-block-settings' )
 	] );
-
-	// Styles.
-	wp_enqueue_style(
-		'mapbox_block-block-editor', // Handle.
-		plugins_url( 'dist/blocks.editor.build.css', dirname( __FILE__ ) ), // Block editor CSS.
-		array( 'wp-edit-blocks' ) // Dependency to include the CSS after it.
-		// filemtime( plugin_dir_path( __DIR__ ) . 'dist/blocks.editor.build.css' ) // Version: filemtime — Gets file modification time.
-	);
-
-	wp_enqueue_style(
-		'mapbox_block-mapbox-geocoder', // Handle.
-		'https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.3.0/mapbox-gl-geocoder.css',
-		array( 'wp-edit-blocks', 'mapbox_block-mapbox-style' ) // Dependency to include the CSS after it.
-		// filemtime( plugin_dir_path( __DIR__ ) . 'dist/blocks.style.build.css' ) // Version: filemtime — Gets file modification time.
-	);
 
 } // End function mapbox_block_editor_assets().
 
@@ -134,9 +134,9 @@ add_action( 'enqueue_block_editor_assets', 'mapbox_block_editor_assets' );
  */
 function mapbox_block_token_setting() {
 	add_settings_section( 'token', '', null, 'mapbox-block-settings');
-	
+
 	$args = array(
-		'type' => 'string', 
+		'type' => 'string',
 		'sanitize_callback' => 'sanitize_text_field',
 		'default' => '',
 	);
@@ -150,7 +150,7 @@ function mapbox_block_token_setting() {
 		'token',
 		array( 'label_for' => 'mapbox_block_token' )
 	);
-} 
+}
 add_action( 'admin_init', 'mapbox_block_token_setting' );
 
 function mapbox_block_settings_field_cb() {
@@ -187,8 +187,8 @@ function mapbox_block_options_page_cb() {
 	<form method="post" action="options.php">
 		<?php
 			settings_fields( 'token' );
-			do_settings_sections( 'mapbox-block-settings' );      
-			submit_button(); 
+			do_settings_sections( 'mapbox-block-settings' );
+			submit_button();
 		?>
 	</form>
 <?php

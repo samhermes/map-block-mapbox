@@ -28,7 +28,7 @@ require_once plugin_dir_path( __FILE__ ) . 'src/init.php';
 function mapbox_block_add_settings_link( $links ) {
 	$settings_link = '<a href="options-general.php?page=mapbox-block-settings">' . __( 'Settings' ) . '</a>';
 	array_push( $links, $settings_link );
-	
+
 	return $links;
 }
 add_filter( 'plugin_action_links_' . plugin_basename(__FILE__), 'mapbox_block_add_settings_link' );

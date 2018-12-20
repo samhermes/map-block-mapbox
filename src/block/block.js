@@ -29,14 +29,14 @@ const { Fragment } = wp.element;
  * @return {?WPBlock}          The block, if it has been successfully
  *                             registered; otherwise `undefined`.
  */
-registerBlockType( 'coordinates/mapbox-map', {
+registerBlockType('coordinates/mapbox-map', {
 	// Block name. Block names must be string that contains a namespace prefix. Example: my-plugin/my-custom-block.
-	title: __( 'Mapbox Map' ), // Block title.
+	title: __('Mapbox Map'), // Block title.
 	icon: 'location-alt', // Block icon from Dashicons → https://developer.wordpress.org/resource/dashicons/.
 	category: 'embed',
 	keywords: [
-		__( 'map-block-mapbox' ),
-		__( 'Mapbox Map Block' ),
+		__('map-block-mapbox'),
+		__('Mapbox Map Block'),
 	],
 	supports: {
 		multiple: false,
@@ -44,23 +44,14 @@ registerBlockType( 'coordinates/mapbox-map', {
 	attributes: {
 		lat: {
 			type: 'number',
-			source: 'attribute',
-            attribute: 'data-lat',
-            selector: '#mapbox-map',
 			default: 0,
 		},
 		lng: {
 			type: 'number',
-			source: 'attribute',
-            attribute: 'data-lng',
-            selector: '#mapbox-map',
 			default: 0,
 		},
 		zoom: {
 			type: 'number',
-			source: 'attribute',
-			attribute: 'data-zoom',
-            selector: '#mapbox-map',
 			default: 1
 		}
 	},
@@ -73,41 +64,49 @@ registerBlockType( 'coordinates/mapbox-map', {
 	 *
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
-	edit: function( { attributes, setAttributes, className } ) {
-		const { lat, lng, zoom } = attributes;
+	edit: function (props) {
+		const {
+			className,
+			attributes: {
+				lat,
+				lng,
+				zoom
+			},
+			setAttributes
+		} = props;
 
-		if ( ! mapboxBlock.accessToken ) {
-            return (
-                <div className="mapbox-block-token">
+		if (!mapboxBlock.accessToken) {
+			return (
+				<div className="mapbox-block-token">
 					<h2>Block Setup</h2>
 					<p>To use this block, you need to connect it to your Mapbox account. From then on out, you'll be good to go!</p>
-					<a href={ mapboxBlock.optionsPage } className="mapbox-block-token-cta">Connect to Mapbox</a>
+					<a href={mapboxBlock.optionsPage} className="mapbox-block-token-cta">Connect to Mapbox</a>
 				</div>
-            )
-        }
-		
-		if ( mapboxBlock.accessToken ) {
+			)
+		}
+
+		if (mapboxBlock.accessToken) {
 			return (
 				<Fragment>
 					<InspectorControls>
 						<RangeControl
-							label={ __( 'Zoom Level' ) }
-							value={ zoom }
-							onChange={ ( value ) => setAttributes( { zoom: value } ) }
-							min={ 1 }
-							max={ 22 }
-							/>
+							label={__('Zoom Level')}
+							value={zoom}
+							onChange={(value) => setAttributes({ zoom: Number(value) })}
+							min={1}
+							max={22}
+						/>
 					</InspectorControls>
-					<div className={ className }>
+					<div className={className}>
 						<Map
-							lat={ lat }
-							lng={ lng }
-							zoom={ zoom }
-							onChange={ ( value ) => setAttributes( {
-								lat: value.lat,
-								lng: value.lng
-							} ) }
-							/>
+							lat={lat}
+							lng={lng}
+							zoom={zoom}
+							onChange={(value) => setAttributes({
+								lat: Number(value.lat),
+								lng: Number(value.lng)
+							})}
+						/>
 					</div>
 				</Fragment>
 			);
@@ -122,17 +121,23 @@ registerBlockType( 'coordinates/mapbox-map', {
 	 *
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
-	save: function( { attributes } ) {
-		const { lat, lng, zoom } = attributes;
+	save: function (props) {
+		const {
+			attributes: {
+				lat,
+				lng,
+				zoom
+			}
+		} = props;
 
 		return (
 			<div>
 				<div id="mapbox-map"
-					data-lat={ lat }
-					data-lng={ lng }
-					data-zoom={ zoom }
+					data-lat={lat}
+					data-lng={lng}
+					data-zoom={zoom}
 				></div>
-			</div>
+			</div >
 		);
 	},
-} );
+});
