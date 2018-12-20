@@ -20,8 +20,7 @@ export default class Map extends React.Component {
         })
 
         let marker = new mapboxgl.Marker()
-            .setLngLat( mapPoint )
-            .addTo( this.map );
+            .setLngLat(mapPoint)
             .addTo(this.map)
 
         this.addControls(marker)
@@ -59,7 +58,7 @@ export default class Map extends React.Component {
                 })
             })
 
-            window.dispatchEvent(new Event('resize'));
+            window.dispatchEvent(new Event('resize'))
         })
     }
 }
