@@ -1,8 +1,8 @@
 === Map Block for Mapbox ===
 Contributors: samhermes
 Tags: block, embed, map, mapbox
-Requires at least: 4.9.8
-Tested up to: 4.9.8
+Requires at least: 5.0
+Tested up to: 5.1
 Stable tag: 1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -25,6 +25,10 @@ Installing "Map Block for Mapbox" can be done either by searching for "Map Block
 
 == Changelog ==
 
-= 1.0 =
+= 1.0.1 =
+* 2018-10-03
+* Fix issue where map block would report invalid content on second page load
+
+= 1.0.0 =
 * 2018-10-03
 * Initial release

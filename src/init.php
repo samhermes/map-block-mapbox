@@ -61,7 +61,7 @@ function mapbox_block_frontend_assets() {
 		'mapbox_block-frontend',
 		plugins_url( 'dist/mapbox-block.js', dirname( __FILE__ ) ),
 		array('mapbox_block-mapbox-gl-js'),  // Dependencies
-		'1.0.0',
+		'1.0.1',
 		true // Enqueue the script in the footer.
 	);
 
@@ -113,7 +113,7 @@ function mapbox_block_editor_assets() {
 		'mapbox_block-block', // Handle.
 		plugins_url( '/dist/blocks.build.js', dirname( __FILE__ ) ), // Block.build.js: We register the block here. Built with Webpack.
 		array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-editor', 'mapbox_block-mapbox-gl-js', 'mapbox_block-mapbox-geocoder' ), // Dependencies, defined above.
-		'1.0.0',
+		'1.0.1',
 		true // Enqueue the script in the footer.
 	);
 
