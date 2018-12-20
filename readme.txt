@@ -26,7 +26,7 @@ Installing "Map Block for Mapbox" can be done either by searching for "Map Block
 == Changelog ==
 
 = 1.0.1 =
-* 2018-10-03
+* 2018-12-19
 * Fix issue where map block would report invalid content on second page load
 
 = 1.0.0 =
